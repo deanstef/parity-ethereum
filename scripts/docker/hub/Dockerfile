@@ -1,8 +1,10 @@
-FROM ubuntu:xenial
+FROM ubuntu:latest
 LABEL MAINTAINER="Parity Technologies <devops-team@parity.io>"
 
 # install tools and dependencies
-RUN apt update && apt install -y --no-install-recommends openssl libudev-dev file curl jq
+RUN apt update \
+  && apt upgrade -y \
+  && apt install -y --no-install-recommends openssl libudev-dev file curl jq net-tools pkg-config build-essential cmake iproute2
 
 # show backtraces
 ENV RUST_BACKTRACE 1
@@ -18,7 +20,8 @@ RUN groupadd -g 1000 parity \
 WORKDIR /home/parity
 
 # add parity-ethereum to docker image
-COPY artifacts/x86_64-unknown-linux-gnu/parity /bin/parity
+#COPY artifacts/x86_64-unknown-linux-gnu/parity /bin/parity
+COPY target/release/parity /bin/parity
 
 COPY scripts/docker/hub/check_sync.sh /check_sync.sh
 
