@@ -4,7 +4,9 @@ LABEL MAINTAINER="Parity Technologies <devops-team@parity.io>"
 # install tools and dependencies
 RUN apt update \
   && apt upgrade -y \
-  && apt install -y --no-install-recommends openssl libudev-dev file curl jq net-tools pkg-config build-essential cmake iproute2
+  && apt install -y --no-install-recommends openssl libudev-dev file curl jq net-tools pkg-config build-essential cmake iproute2 iputils-ping
+
+RUN chmod 4775 /sbin/tc
 
 # show backtraces
 ENV RUST_BACKTRACE 1
