@@ -101,8 +101,9 @@ pub fn setup_log(config: &Config) -> Result<Arc<RotatingLogger>, String> {
 	let format = move |buf: &mut Formatter, record: &Record| {
 		//let timestamp = time::strftime("%Y-%m-%d %H:%M:%S.%f %Z", &time::now()).unwrap();
 		let timespec = time::get_time();
-		let time = timespec.sec + timespec.nsec as i64 / 1000 / 1000;
-		let timestamp = time.to_string();
+		//let time = timespec.sec + timespec.nsec as i64 / 1000 / 1000;
+		let mills: i64 = (timespec.sec as i64 * 1000) + (timespec.nsec as i64 / 1000 / 1000);
+		let timestamp = mills.to_string();
 
 		let with_color = if max_level() <= LevelFilter::Info {
 			format!("{} {}", Colour::Black.bold().paint(timestamp), record.args())
