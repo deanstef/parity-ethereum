@@ -247,7 +247,7 @@ impl<D: Dispatcher + 'static> Personal for PersonalClient<D> {
 	}
 
 	fn send_transaction(&self, meta: Metadata, request: TransactionRequest, password: String) -> BoxFuture<H256> {
-		self.deprecation_notice.print("personal_sendTransaction", deprecated::msgs::ACCOUNTS);
+		//self.deprecation_notice.print("personal_sendTransaction", deprecated::msgs::ACCOUNTS);
 		let condition = request.condition.clone().map(Into::into);
 		let dispatcher = self.dispatcher.clone();
 		Box::new(
